@@ -6,7 +6,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
 
 ## Tasks
 
-- [ ] 1. Scaffold HTML structure and CSS design tokens
+- [x] 1. Scaffold HTML structure and CSS design tokens
   - Write the full `index.html` skeleton: `<header>` with greeting/clock and theme-toggle button, `<main class="dashboard">` with three `<section>` cards (Focus Timer, To-Do List, Quick Links), edit-task modal `<div id="editModal">`, and toast `<div id="toast">`.
   - Write CSS design tokens (`:root` custom properties for colors, radii, shadows, font), dark-theme overrides (`[data-theme="dark"]`), reset rules, and base typography.
   - Add `.header` layout and `.dashboard` CSS Grid (`repeat(auto-fit, minmax(320px,1fr))`).
@@ -14,13 +14,13 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
   - Add `@media (max-width: 600px)` breakpoint that collapses to a single column.
   - _Requirements: 9.1, 9.2, 9.3_
 
-- [ ] 2. Implement LocalStorage helpers and security helpers
-  - [ ] 2.1 Implement `getLS(key, fallback)` and `setLS(key, value)` in `js/app.js`
+- [x] 2. Implement LocalStorage helpers and security helpers
+  - [x] 2.1 Implement `getLS(key, fallback)` and `setLS(key, value)` in `js/app.js`
     - `getLS` JSON-parses `localStorage.getItem(key)`; returns `fallback` on missing key or parse error.
     - `setLS` JSON-serializes `value` and writes to `localStorage`.
     - _Requirements: 4.7, 4.8, 6.5, 6.6_
 
-  - [ ] 2.2 Implement `escapeHtml(str)` and `escapeAttr(str)` in `js/app.js`
+  - [x] 2.2 Implement `escapeHtml(str)` and `escapeAttr(str)` in `js/app.js`
     - `escapeHtml` replaces `& < > " '` with their HTML entities.
     - `escapeAttr` returns `escapeHtml(str)` for `http://` or `https://` URLs; substitutes `"#"` for all other strings.
     - _Requirements: 7.1, 7.2, 7.3_
@@ -36,8 +36,8 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 7.3**
     - Generator: `fc.string()` filtered for non-`http(s)` inputs; assert result `=== "#"`. Generator: `fc.webUrl()`; assert result is not `"#"`.
 
-- [ ] 3. Implement Greeting & Clock widget
-  - [ ] 3.1 Implement `getGreetingText(hour)` and `updateClock()` in `js/app.js`
+- [x] 3. Implement Greeting & Clock widget
+  - [x] 3.1 Implement `getGreetingText(hour)` and `updateClock()` in `js/app.js`
     - `getGreetingText` maps hours 5–11 → morning, 12–16 → afternoon, 17–20 → evening, 0–4 and 21–23 → night.
     - `updateClock` reads `new Date()`, calls `getGreetingText`, sets `#greeting` and `#datetime` `textContent`.
     - Call `updateClock()` once on load; then `setInterval(updateClock, 1000)`.
@@ -49,8 +49,8 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 1.3, 1.4, 1.5, 1.6**
     - Generator: `fc.integer({min:0, max:23})`. Assert output is non-empty string with correct zone mapping.
 
-- [ ] 4. Implement Theme Toggle
-  - [ ] 4.1 Implement `applyTheme(theme)` and wire `#themeToggle` click in `js/app.js`
+- [x] 4. Implement Theme Toggle
+  - [x] 4.1 Implement `applyTheme(theme)` and wire `#themeToggle` click in `js/app.js`
     - `applyTheme` sets `data-theme` on `<html>` and calls `setLS("theme", theme)`.
     - On load: `applyTheme(getLS("theme", "light"))`.
     - Toggle handler: reads current `data-theme`, flips to the other value, calls `applyTheme`.
@@ -63,8 +63,8 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 2.2, 2.3**
     - Generator: `fc.constantFrom("light","dark")`. Assert `applyTheme(t)` → `getLS("theme") === t`.
 
-- [ ] 5. Implement Focus Timer widget
-  - [ ] 5.1 Implement `formatTime(seconds)` in `js/app.js`
+- [x] 5. Implement Focus Timer widget
+  - [x] 5.1 Implement `formatTime(seconds)` in `js/app.js`
     - Pads minutes and seconds to two digits; returns `"MM:SS"`.
     - _Requirements: 3.2, 3.3, 3.4_
 
@@ -73,7 +73,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 3.2, 3.3, 3.4**
     - Generator: `fc.integer({min:0, max:7200})`. Assert output matches `/^[0-9]{2}:[0-9]{2}$/`.
 
-  - [ ] 5.3 Implement timer state variables and `updateTimerUI()` in `js/app.js`
+  - [x] 5.3 Implement timer state variables and `updateTimerUI()` in `js/app.js`
     - Declare `timerDuration`, `timerRemaining`, `timerRunning`, `timerInterval`.
     - On load: initialize from `getLS("pomodoroDuration", 25) * 60`; set `#pomodoroMinutes` input value.
     - `updateTimerUI` updates `#timerDisplay` text and SVG ring `stroke-dashoffset`; toggles `.low` class when `timerRemaining ≤ 60` and `timerRunning === true`.
@@ -85,7 +85,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 3.6**
     - Generator: `fc.integer({min:0, max:60})` with `timerRunning = true`; assert `.low` class present. Generator: `fc.integer({min:61})` with running timer; assert no `.low` class.
 
-  - [ ] 5.5 Implement `startTimer()`, `stopTimer()`, and `resetTimer()` in `js/app.js`
+  - [x] 5.5 Implement `startTimer()`, `stopTimer()`, and `resetTimer()` in `js/app.js`
     - `startTimer`: no-ops if already running; sets `timerRunning = true`, starts `setInterval` that decrements `timerRemaining` and calls `updateTimerUI`; calls `showToast` and stops on zero.
     - `stopTimer`: clears interval, sets `timerRunning = false`, removes `.low` class.
     - `resetTimer`: calls `stopTimer`, restores `timerRemaining = timerDuration`, calls `updateTimerUI`.
@@ -97,7 +97,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 3.4**
     - Generator: `fc.integer({min:60, max:7200})`. After `resetTimer()`, assert `timerRemaining === timerDuration` and `timerRunning === false`.
 
-  - [ ] 5.7 Implement custom Pomodoro duration input in `js/app.js`
+  - [x] 5.7 Implement custom Pomodoro duration input in `js/app.js`
     - `#pomodoroSet` click: parse `#pomodoroMinutes` value as integer; if outside 1–120 call `showToast` and return; otherwise call `stopTimer`, update `timerDuration` and `timerRemaining`, call `setLS("pomodoroDuration", val)`, call `updateTimerUI`.
     - _Requirements: 3.7, 3.8, 3.9_
 
@@ -106,11 +106,11 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 3.9, 3.10**
     - Generator: `fc.integer({min:1, max:120})`. After setting, assert `getLS("pomodoroDuration") === val`.
 
-- [ ] 6. Checkpoint — verify timer and clock
+- [x] 6. Checkpoint — verify timer and clock
   - Ensure all implemented functions and UI are wired correctly, the timer counts down and stops at zero with a toast, the clock updates every second, and theme persists on reload. Ask the user if questions arise.
 
-- [ ] 7. Implement To-Do List widget
-  - [ ] 7.1 Implement `saveTasks()`, `getSortedTasks()`, and `renderTasks()` in `js/app.js`
+- [x] 7. Implement To-Do List widget
+  - [x] 7.1 Implement `saveTasks()`, `getSortedTasks()`, and `renderTasks()` in `js/app.js`
     - `saveTasks` writes `tasks[]` to `setLS("tasks", tasks)`.
     - `getSortedTasks` shallow-copies `tasks[]` and sorts by `#sortSelect` value (`default`, `az`, `za`, `done`, `undone`) using `localeCompare`.
     - `renderTasks` clears `#todoList`, iterates sorted tasks, creates `<li class="todo__item">` with checkbox, escaped label, edit and delete buttons; toggles `#todoEmpty`.
@@ -139,7 +139,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 5.5, 5.6**
     - Generator: `fc.array(taskArb)`. done-last: all `done===false` before all `done===true`; done-first: inverse.
 
-  - [ ] 7.6 Implement `addTask(text)` via `#todoForm` submit handler in `js/app.js`
+  - [x] 7.6 Implement `addTask(text)` via `#todoForm` submit handler in `js/app.js`
     - Trim input; return early on empty string.
     - Push `{ id: Date.now(), text, done: false }` to `tasks[]`; call `saveTasks()` and `renderTasks()`.
     - Clear and re-focus `#todoInput`.
@@ -155,7 +155,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 4.1**
     - Generator: `fc.stringOf(fc.constantFrom(' ','\t','\n'))`. Assert list length and contents unchanged.
 
-  - [ ] 7.9 Implement edit modal: `openEditModal`, `closeEditModal`, `saveEdit` in `js/app.js`
+  - [x] 7.9 Implement edit modal: `openEditModal`, `closeEditModal`, `saveEdit` in `js/app.js`
     - `openEditModal(task)`: set `editingTask`, populate `#editInput`, remove `hidden` from `#editModal`, focus input.
     - `closeEditModal()`: clear `editingTask`, set `#editModal hidden`.
     - `saveEdit()`: trim `#editInput`; return early if empty; mutate `editingTask.text`; call `saveTasks()`, `renderTasks()`, `closeEditModal()`.
@@ -189,8 +189,8 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 4.7, 4.8**
     - Generator: `fc.array(taskArb)`. `saveTasks()` → `getLS("tasks")` has same `id/text/done` per task.
 
-- [ ] 8. Implement Quick Links widget
-  - [ ] 8.1 Implement `saveLinks()`, `getFavicon(url)`, and `renderLinks()` in `js/app.js`
+- [x] 8. Implement Quick Links widget
+  - [x] 8.1 Implement `saveLinks()`, `getFavicon(url)`, and `renderLinks()` in `js/app.js`
     - `saveLinks` writes `links[]` to `setLS("quickLinks", links)`.
     - `getFavicon` extracts origin from URL, returns Google favicon service URL; returns `""` on parse error.
     - `renderLinks` clears `#linkList`, creates `.link-chip` elements with favicon `<img>`, escaped label as anchor (`target="_blank" rel="noopener noreferrer"`), and delete button; toggles `#linksEmpty`.
@@ -203,7 +203,7 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 6.5, 6.6**
     - Generator: `fc.array(linkArb)`. `saveLinks()` → `getLS("quickLinks")` has same `id/name/url` per link.
 
-  - [ ] 8.3 Implement `addLink` via `#linkForm` submit handler in `js/app.js`
+  - [x] 8.3 Implement `addLink` via `#linkForm` submit handler in `js/app.js`
     - Trim name and URL; return early if either is empty.
     - Prepend `"https://"` if URL does not match `/^https?:\/\//i`.
     - Push `{ id: Date.now(), name, url }` to `links[]`; call `saveLinks()` and `renderLinks()`.
@@ -225,8 +225,8 @@ Implement a client-side, single-page productivity dashboard in three files: `ind
     - **Validates: Requirements 6.4**
     - Generator: `fc.array(linkArb, {minLength:1})` + pick one link. After delete, no link with that `id`; others intact.
 
-- [ ] 9. Implement Toast notification system
-  - [ ] 9.1 Implement `showToast(message, duration)` in `js/app.js`
+- [x] 9. Implement Toast notification system
+  - [x] 9.1 Implement `showToast(message, duration)` in `js/app.js`
     - Set `#toastMsg.textContent`, remove `hidden` from `#toast`, clear any pending timer.
     - After `duration` ms: add `.fade-out` class; after 420 ms more: set `hidden = true`.
     - Re-entrant: if called while a toast is visible, replace message and restart timer.
